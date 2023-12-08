@@ -1,3 +1,4 @@
+
 {% comment %}
   Renders product variant options
 
@@ -19,11 +20,19 @@
   assign variants_option1_arr = product.variants | map: 'option1'
   assign variants_option2_arr = product.variants | map: 'option2'
   assign variants_option3_arr = product.variants | map: 'option3'
+  assign variants = product.variants
 
   assign product_form_id = 'product-form-' | append: section.id
 -%}
 
+<div class="all-variants">
+{% for single in variants %}
+  <div class="" data-id="{{single.id}}" data-price="{{single.price | money_with_currency  }}" data-title="{{single.title}}" data-option1="{{single.option1}}" data-option2="{{single.option2}}"></div>
+{% endfor %}
+</div>
+
 {%- for value in option.values -%}
+   
   {%- liquid
     assign option_disabled = true
 
@@ -44,13 +53,13 @@
       endcase
     endfor
   -%}
-
-  {%- if block.settings.picker_type == 'button' -%}
+    {%- if dropdown_menu == 'button' -%}
     <input
       type="radio"
       id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
       name="{{ option.name }}"
       value="{{ value | escape }}"
+      class="he-var-{{ value | escape | handle }}"
       form="{{ product_form_id }}"
       {% if option.selected_value == value %}
         checked
@@ -60,10 +69,12 @@
       {% endif %}
     >
     <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}">
-      {{ value -}}
+      {% if option.name == 'Color' %}
+      <img width="30" src="" class="he-variant-thumbnail" />
+      {% endif %}
       <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
     </label>
-  {%- elsif block.settings.picker_type == 'dropdown' -%}
+  {%- elsif dropdown_menu == 'dropdown' -%}
     <option
       value="{{ value | escape }}"
       {% if option.selected_value == value %}

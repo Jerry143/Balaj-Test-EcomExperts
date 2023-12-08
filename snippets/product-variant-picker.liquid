@@ -10,7 +10,8 @@
   {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
 {% endcomment %}
 {%- unless product.has_only_default_variant -%}
-  {%- if block.settings.picker_type == 'button' -%}
+
+ {% if product.options[0] == 'Color' %}
     <variant-radios
       id="variant-radios-{{ section.id }}"
       class="no-js-hidden"
@@ -22,16 +23,20 @@
       {{ block.shopify_attributes }}
     >
       {%- for option in product.options_with_values -%}
-        <fieldset class="js product-form__input">
+        {% if option.name == 'Color' %}
+        <fieldset class="js product-form__input he-{{option.name | handle}}">
           <legend class="form__label">{{ option.name }}</legend>
-          {% render 'product-variant-options', product: product, option: option, block: block %}
+          {% render 'product-variant-options', product: product, option: option, dropdown_menu: 'button' %}
         </fieldset>
+        {% endif %}
       {%- endfor -%}
       <script type="application/json">
         {{ product.variants | json }}
       </script>
     </variant-radios>
-  {%- else -%}
+  {% endif %}
+
+ {% if product.options[1] == 'Size' %}
     <variant-selects
       id="variant-selects-{{ section.id }}"
       class="no-js-hidden"
@@ -43,7 +48,9 @@
       {{ block.shopify_attributes }}
     >
       {%- for option in product.options_with_values -%}
-        <div class="product-form__input product-form__input--dropdown">
+      
+      {% if option.name == 'Size' %}
+        <div class="product-form__input product-form__input--dropdown he-{{option.name | handle}}">
           <label class="form__label" for="Option-{{ section.id }}-{{ forloop.index0 }}">
             {{ option.name }}
           </label>
@@ -54,18 +61,20 @@
               name="options[{{ option.name | escape }}]"
               form="{{ product_form_id }}"
             >
-              {% render 'product-variant-options', product: product, option: option, block: block %}
+              {% render 'product-variant-options', product: product, option: option, dropdown_menu: 'dropdown' %}
             </select>
             {% render 'icon-caret' %}
           </div>
         </div>
+        {% endif %}
+
       {%- endfor -%}
 
       <script type="application/json">
         {{ product.variants | json }}
       </script>
     </variant-selects>
-  {%- endif -%}
+  {% endif %}
 {%- endunless -%}
 
 <noscript class="product-form__noscript-wrapper-{{ section.id }}">

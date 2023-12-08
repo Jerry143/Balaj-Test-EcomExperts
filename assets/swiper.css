@@ -1,0 +1,63 @@
+.he-cart-remove-btn svg{
+    width: 20px;
+}
+
+.hrx-except-variant-image:not(.show){
+    display: none;
+}
+
+.hrx-product-gallery-thumbnail {
+    cursor: pointer;
+}
+
+.product-form__buttons.disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.hrx-product-gallery-thumbnail img {
+    height: 163px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.hrx-swiper-main-img img {
+    object-fit: cover;
+    height: 715px;
+}
+
+.hrx-product-gallery-thumbnail {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:20px;
+    margin-top: 20px;
+}
+
+/* Swiper */
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mySwiper .swiper-slide {
+    width: 25%;
+    height: 100%;
+    opacity: 0.4;
+}

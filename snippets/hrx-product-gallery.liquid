@@ -1,0 +1,71 @@
+{%- liquid 
+
+        capture gallery
+
+            for variant in product.variants
+              if variant.option2 == 'Unselected' 
+
+                assign img_v = variant.featured_image.src
+
+                echo '<div class="swiper-slide he-img-'
+                echo img_v.alt
+                echo '" data-index="'
+                echo forloop.index
+                echo '">'
+                echo '<img class="img-responsive" src="'
+                echo img_v | img_url:'master'
+                echo '" />'
+                echo '</div>'
+              
+              endif
+            endfor
+            
+                echo '<div class="swiper-slide he-img-'
+                echo product.featured_image.alt
+                echo '">'
+                echo '<img class="img-responsive"src="'
+                echo product.featured_image.src | img_url:'master'
+                echo '" />'
+                echo '</div>'
+              
+        endcapture
+
+    -%}
+{% comment %} Using product {Object}: product {% endcomment %}
+
+  <div class="swiper hrx-swiper-main-img">
+    <div class="swiper-wrapper">
+          {{gallery}}
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+    <div class="hrx-product-gallery-thumbnail">
+      <div class="hrx-current-active-img">
+        {%- liquid 
+             for variant in product.variants
+              if variant.option2 == 'Unselected' and variant.option1 == 'Black'
+
+                assign img_v = variant.featured_image.src
+
+                echo '<div class="default-img'
+                echo img_v.alt
+                echo '" data-index="'
+                echo forloop.index
+                echo '">'
+                echo '<img src="'
+                echo img_v | img_url:'master'
+                echo '" class="img-responsive" />'
+                echo '</div>'
+              
+              endif
+            endfor
+            -%}
+      </div>
+      <div class="hrx-except-variant-image show">
+          <img src="{{ product.featured_image.src | img_url:'master' }}" class="img-responsive" />
+      </div>
+    </div>
+ 
+
+{{ 'swiper.js' | asset_url | script_tag }}
