@@ -121,7 +121,7 @@ const remove_additional_product = (e, variantID) => {
     // APi DATA
     let formData = `updates[${variantID}]=0`
 
-    if (variantID == 44717666074783) {
+    if (variantID == 44717666140319) {
         // APi DATA For Product
         formData = `updates[${variantID}]=0&updates[44711894909087]=0`
 
@@ -244,6 +244,9 @@ const radioChange = (current) => {
 // Swatches
 colorInps.forEach((single) => {
     let val = single.value.toLowerCase();
+
+    console.log('value:::',val)
+
     let sliderThumb = document.querySelector(`.he-img-${val} img`)
     let label = single.nextElementSibling
     let labelSrc = label.querySelector('img')
